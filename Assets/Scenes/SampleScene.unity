@@ -359,13 +359,13 @@ MonoBehaviour:
   wallJumpSpeedY: 10
   wallJumpSpeedX: 30
   canWallJump: 1
-  pointOffSet: {x: -0.48, y: -0.96}
+  pointOffSet: {x: 0.01, y: -0.96}
   size: {x: 0.31, y: 0.36}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  leftPointOffSet: {x: -0.77, y: 0.06}
-  rightPointOffSet: {x: -0.27, y: 0.06}
+  leftPointOffSet: {x: -0.26, y: 0.06}
+  rightPointOffSet: {x: 0.3, y: 0.06}
   onWallSize: {x: 0.27, y: 0.45}
   spriteRenderer: {fileID: 899146770}
 --- !u!50 &899146767
@@ -402,11 +402,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.4987254, y: -0.09465599}
+  m_Offset: {x: 0, y: -0.09465599}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 1, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -493,7 +493,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899146765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.94, y: -3.39, z: 0}
+  m_LocalPosition: {x: -7.304, y: -3.356, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
