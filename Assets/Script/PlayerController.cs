@@ -6,42 +6,42 @@ using UnityEngine.Animations;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float walkSpeed;
-    [SerializeField] float accelerateTime;
-    [SerializeField] float decelerateTime;
-    [SerializeField] Vector2 inputOffset;
+    [SerializeField] float walkSpeed = 10f;
+    [SerializeField] float accelerateTime = 0.3f;
+    [SerializeField] float decelerateTime = 0.3f;
+    [SerializeField] Vector2 inputOffset = new Vector2(0.1f, 0.1f);
     bool canMove = true;
 
     [Header("Jump")]
-    [SerializeField] float jumpingSpeed;
-    [SerializeField] float fallMultiplier;
-    [SerializeField] float lowJumpMultiplier;
-    bool canJump = true;
+    [SerializeField] float jumpingSpeed = 10f;
+    [SerializeField] float fallMultiplier = 3f;
+    [SerializeField] float lowJumpMultiplier = 3f;
+    [SerializeField]bool canJump = true;
     bool isJumping;
 
     [Header("DoubleJump")]
-    [SerializeField] float doubleJumpSpeed;
-    bool canDoubleJump;
+    [SerializeField] float doubleJumpSpeed = 6f;
+    [SerializeField]bool canDoubleJump;
     bool isDoubleJumping;
 
     [Header("WallJump")]
-    [SerializeField] float wallJumpSpeedY;
-    [SerializeField] float wallJumpSpeedX;
-    [SerializeField] bool canWallJump;
+    [SerializeField] float wallJumpSpeedY = 15f;
+    [SerializeField] float wallJumpSpeedX = 20f;
+    [SerializeField] bool canWallJump = true;
     bool isWallJumped;
     bool isJumpingButtonRelease = true;
 
     [Header("GroundCheck")]
-    [SerializeField] Vector2 pointOffSet;
-    [SerializeField] Vector2 size;
+    [SerializeField] Vector2 pointOffSet = new Vector2(0, -0.96f);
+    [SerializeField] Vector2 size = new Vector2(0.33f, 0.27f);
     [SerializeField] LayerMask groundLayerMask;
     bool gravityModifier = true;
     bool isOnGround;
 
     [Header("WallCheck")]
-    [SerializeField] Vector2 leftPointOffSet;
-    [SerializeField] Vector2 rightPointOffSet;
-    [SerializeField] Vector2 onWallSize;
+    [SerializeField] Vector2 leftPointOffSet = new Vector2(-0.31f, 0);
+    [SerializeField] Vector2 rightPointOffSet = new Vector2(0.33f, 0);
+    [SerializeField] Vector2 onWallSize = new Vector2(0.18f, 0.37f);
     bool isOnWall = true;
     bool isOnLeftWall = true;
     bool isOnRightWall = true;
@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
                 isJumping = true;
                 isJumpingButtonRelease = false;
                 animator.SetBool("Jump", true);
+                animator.SetBool("Idle", false);
             }
             if(isJumping && canDoubleJump && !isDoubleJumping && isJumpingButtonRelease)
             {
@@ -106,6 +107,8 @@ public class PlayerController : MonoBehaviour
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, doubleJumpSpeed);
                     canDoubleJump = false;
                     isDoubleJumping = true;
+                    animator.SetBool("Jump", true);
+                    animator.SetBool("Fall", false);
                 }
             }
         }
@@ -116,6 +119,8 @@ public class PlayerController : MonoBehaviour
             {
                 //Speed up falling
                 rigidBody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+                animator.SetBool("Jump", false);
+                animator.SetBool("Fall", true);
             }
             //When player is jumping and release the jump button
             else if (rigidBody.velocity.y > 0 && Input.GetAxis("Jump") != 1)
@@ -141,10 +146,14 @@ public class PlayerController : MonoBehaviour
                 if (isOnLeftWall)
                 {
                     rigidBody.velocity = new Vector2(wallJumpSpeedX, wallJumpSpeedY);
+                    animator.SetBool("Jump", true);
+                    animator.SetBool("Fall", false);
                 }
                 else
                 {
                     rigidBody.velocity = new Vector2(wallJumpSpeedX * -1, wallJumpSpeedY);
+                    animator.SetBool("Jump", true);
+                    animator.SetBool("Fall", false);
                 }
                 isWallJumped = true;
                 isJumpingButtonRelease = false;
@@ -159,7 +168,8 @@ public class PlayerController : MonoBehaviour
             canDoubleJump = false;
             isDoubleJumping = false;
             isWallJumped = false;
-            animator.SetBool("Jump", false);
+            animator.SetBool("Fall", false);
+            animator.SetBool("Idle", true);
         }
         #endregion
     }
