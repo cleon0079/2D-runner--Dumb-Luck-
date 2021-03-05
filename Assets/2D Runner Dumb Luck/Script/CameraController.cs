@@ -9,7 +9,6 @@ public class CameraController : MonoBehaviour
     public bool isFollowing = true;
 
     public float xOffset;
-    public float yOffset;
 
     // Start is called before the first frame update
     void Start()

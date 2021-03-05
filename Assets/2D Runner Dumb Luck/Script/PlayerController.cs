@@ -6,14 +6,14 @@ using UnityEngine.Animations;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float walkSpeed = 10f;
+    [SerializeField] float walkSpeed = 8f;
     [SerializeField] float accelerateTime = 0.3f;
     [SerializeField] float decelerateTime = 0.3f;
     [SerializeField] Vector2 inputOffset = new Vector2(0.1f, 0.1f);
     bool canMove = true;
 
     [Header("Jump")]
-    [SerializeField] float jumpingSpeed = 10f;
+    [SerializeField] float jumpingSpeed = 8f;
     [SerializeField] float fallMultiplier = 3f;
     [SerializeField] float lowJumpMultiplier = 3f;
     [SerializeField]bool canJump = true;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [Header("WallJump")]
     [SerializeField] float wallJumpSpeedY = 15f;
     [SerializeField] float wallJumpSpeedX = 20f;
-    [SerializeField] bool canWallJump = true;
+    [SerializeField] bool canWallJump = false;
     bool isWallJumped;
     bool isJumpingButtonRelease = true;
 
@@ -67,6 +67,15 @@ public class PlayerController : MonoBehaviour
         isOnRightWall = OnRightWall();
         isOnWall = isOnLeftWall ^ isOnRightWall;
 
+        if(rigidBody.velocity.x == 0 && rigidBody.velocity.y == 0 && Input.GetAxisRaw("Horizontal") == 0)
+        {
+            animator.SetBool("Idle", true);
+            animator.SetBool("Fall", false);
+            animator.SetBool("Jump", false);
+            animator.SetBool("Run", false);
+        }
+        
+
         #region Movement
         if (canMove)
         {
@@ -75,11 +84,15 @@ public class PlayerController : MonoBehaviour
             {
                 rigidBody.velocity = new Vector2(Mathf.SmoothDamp(rigidBody.velocity.x, walkSpeed * Time.fixedDeltaTime * 60, ref velocityX, accelerateTime), rigidBody.velocity.y);
                 spriteRenderer.flipX = false;
+                animator.SetBool("Idle", false);
+                animator.SetBool("Run", true);
             }
             else if (Input.GetAxisRaw("Horizontal") < inputOffset.x * -1)
             {
                 rigidBody.velocity = new Vector2(Mathf.SmoothDamp(rigidBody.velocity.x, walkSpeed * Time.fixedDeltaTime * -60, ref velocityX, accelerateTime), rigidBody.velocity.y);
                 spriteRenderer.flipX = true;
+                animator.SetBool("Idle", false);
+                animator.SetBool("Run", true);
             }
             else
             {
@@ -97,8 +110,6 @@ public class PlayerController : MonoBehaviour
                 canDoubleJump = true;
                 isJumping = true;
                 isJumpingButtonRelease = false;
-                animator.SetBool("Jump", true);
-                animator.SetBool("Idle", false);
             }
             if(isJumping && canDoubleJump && !isDoubleJumping && isJumpingButtonRelease)
             {
@@ -107,8 +118,6 @@ public class PlayerController : MonoBehaviour
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, doubleJumpSpeed);
                     canDoubleJump = false;
                     isDoubleJumping = true;
-                    animator.SetBool("Jump", true);
-                    animator.SetBool("Fall", false);
                 }
             }
         }
@@ -119,8 +128,6 @@ public class PlayerController : MonoBehaviour
             {
                 //Speed up falling
                 rigidBody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
-                animator.SetBool("Jump", false);
-                animator.SetBool("Fall", true);
             }
             //When player is jumping and release the jump button
             else if (rigidBody.velocity.y > 0 && Input.GetAxis("Jump") != 1)
@@ -146,14 +153,10 @@ public class PlayerController : MonoBehaviour
                 if (isOnLeftWall)
                 {
                     rigidBody.velocity = new Vector2(wallJumpSpeedX, wallJumpSpeedY);
-                    animator.SetBool("Jump", true);
-                    animator.SetBool("Fall", false);
                 }
                 else
                 {
                     rigidBody.velocity = new Vector2(wallJumpSpeedX * -1, wallJumpSpeedY);
-                    animator.SetBool("Jump", true);
-                    animator.SetBool("Fall", false);
                 }
                 isWallJumped = true;
                 isJumpingButtonRelease = false;
@@ -168,8 +171,6 @@ public class PlayerController : MonoBehaviour
             canDoubleJump = false;
             isDoubleJumping = false;
             isWallJumped = false;
-            animator.SetBool("Fall", false);
-            animator.SetBool("Idle", true);
         }
         #endregion
     }
@@ -221,20 +222,5 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube((Vector2)transform.position + rightPointOffSet, onWallSize);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Platform")
-        {
-            transform.parent = collision.transform;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Platform")
-        {
-            transform.parent = null;
-        }
-    }
     #endregion
 }
