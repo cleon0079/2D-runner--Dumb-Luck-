@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float walkSpeed = 8f;
-    [SerializeField] float accelerateTime = 0.3f;
-    [SerializeField] float decelerateTime = 0.3f;
+    [SerializeField] float accelerateTime = 0.7f;
+    [SerializeField] float decelerateTime = 1f;
     [SerializeField] Vector2 inputOffset = new Vector2(0.1f, 0.1f);
     bool canMove = true;
 
@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
 
     float velocityX;
+    Point point;
 
     void Awake()
     {
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Fall", false);
             animator.SetBool("Jump", false);
             animator.SetBool("Run", false);
+            animator.SetBool("DoubleJump", false);
         }
         
 
@@ -84,15 +86,23 @@ public class PlayerController : MonoBehaviour
             {
                 rigidBody.velocity = new Vector2(Mathf.SmoothDamp(rigidBody.velocity.x, walkSpeed * Time.fixedDeltaTime * 60, ref velocityX, accelerateTime), rigidBody.velocity.y);
                 spriteRenderer.flipX = false;
-                animator.SetBool("Idle", false);
-                animator.SetBool("Run", true);
+                if(rigidBody.velocity.y == 0)
+                {
+                    animator.SetBool("Run", true);
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Fall", false);
+                }
             }
             else if (Input.GetAxisRaw("Horizontal") < inputOffset.x * -1)
             {
                 rigidBody.velocity = new Vector2(Mathf.SmoothDamp(rigidBody.velocity.x, walkSpeed * Time.fixedDeltaTime * -60, ref velocityX, accelerateTime), rigidBody.velocity.y);
                 spriteRenderer.flipX = true;
-                animator.SetBool("Idle", false);
-                animator.SetBool("Run", true);
+                if (rigidBody.velocity.y == 0)
+                {
+                    animator.SetBool("Run", true);
+                    animator.SetBool("Idle", false);
+                    animator.SetBool("Fall", false);
+                }
             }
             else
             {
@@ -110,6 +120,9 @@ public class PlayerController : MonoBehaviour
                 canDoubleJump = true;
                 isJumping = true;
                 isJumpingButtonRelease = false;
+                animator.SetBool("Jump", true);
+                animator.SetBool("Run", false);
+                animator.SetBool("Idle", false);
             }
             if(isJumping && canDoubleJump && !isDoubleJumping && isJumpingButtonRelease)
             {
@@ -118,6 +131,9 @@ public class PlayerController : MonoBehaviour
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, doubleJumpSpeed);
                     canDoubleJump = false;
                     isDoubleJumping = true;
+                    animator.SetBool("DoubleJump", true);
+                    animator.SetBool("Jump", false);
+                    animator.SetBool("Fall", false);
                 }
             }
         }
@@ -128,6 +144,9 @@ public class PlayerController : MonoBehaviour
             {
                 //Speed up falling
                 rigidBody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+                animator.SetBool("Fall", true);
+                animator.SetBool("Jump", false);
+                animator.SetBool("DoubleJump", false);
             }
             //When player is jumping and release the jump button
             else if (rigidBody.velocity.y > 0 && Input.GetAxis("Jump") != 1)

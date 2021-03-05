@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Point : MonoBehaviour
 {
@@ -10,7 +7,7 @@ public class Point : MonoBehaviour
     [SerializeField] int point;
     [SerializeField] int earnPoint = 1;
     float timer;
-    float gameTime;
+    public float gameTime;
 
     // Start is called before the first frame update
     void Start()
