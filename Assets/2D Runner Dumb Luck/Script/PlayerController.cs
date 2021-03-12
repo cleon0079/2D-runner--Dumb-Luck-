@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float walkSpeed = 8f;
+    public float walkSpeed = 8f;
     [SerializeField] float accelerateTime = 0.7f;
     [SerializeField] float decelerateTime = 1f;
     [SerializeField] Vector2 inputOffset = new Vector2(0.1f, 0.1f);
@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
     Animator animator;
 
     float velocityX;
-    Point point;
 
     void Awake()
     {

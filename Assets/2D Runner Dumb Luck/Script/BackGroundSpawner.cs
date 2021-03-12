@@ -11,7 +11,7 @@ public class BackGroundSpawner : MonoBehaviour
 
     void Update()
     {
-        if (player.transform.position.x >= currentBackground.transform.position.x)
+        if (player.transform.position.x >= currentBackground.transform.position.x - 7)
         {
             SpriteRenderer rend = currentBackground.GetComponentInChildren<SpriteRenderer>();
 
