@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: e9bac3289be25d741a6301c2b2d3c2f9
 TextureImporter:
   internalIDToNameTable:
@@ -11,6 +12,11 @@ TextureImporter:
   - first:
       213: -5501149136055759641
     second: Sand storm_2
+=======
+guid: e48a86ff97b1a2f449f2c5815e837e2d
+TextureImporter:
+  internalIDToNameTable: []
+>>>>>>> Stashed changes
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,7 +47,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< Updated upstream
     filterMode: 0
+=======
+    filterMode: -1
+>>>>>>> Stashed changes
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -50,12 +60,20 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
+<<<<<<< Updated upstream
   spriteMode: 2
+=======
+  spriteMode: 1
+>>>>>>> Stashed changes
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
+<<<<<<< Updated upstream
   spritePixelsToUnits: 16
+=======
+  spritePixelsToUnits: 100
+>>>>>>> Stashed changes
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,6 +102,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< Updated upstream
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
@@ -174,6 +193,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+=======
+  spriteSheet:
+    serializedVersion: 2
+    sprites: []
+>>>>>>> Stashed changes
     outline: []
     physicsShape: []
     bones: []
