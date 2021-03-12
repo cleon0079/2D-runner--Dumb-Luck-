@@ -9,12 +9,11 @@ public class BackGroundSpawner : MonoBehaviour
     [SerializeField] GameObject currentBackground;
     [SerializeField] GameObject player;
 
-    // Update is called once per frame
     void Update()
     {
         if (player.transform.position.x >= currentBackground.transform.position.x)
         {
-            SpriteRenderer rend = currentBackground.GetComponent<SpriteRenderer>();
+            SpriteRenderer rend = currentBackground.GetComponentInChildren<SpriteRenderer>();
 
             GameObject newSpawnBackground = Instantiate<GameObject>(background);
             //place it
