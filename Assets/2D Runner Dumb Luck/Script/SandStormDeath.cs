@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeath : MonoBehaviour
+public class SandStormDeath : MonoBehaviour
 {
-    public GameObject Player;
 
-    public Vector2 touched_object;
+    public GameObject player;
     public bool touch = false;
-    // Use this for initialization
+    
+  
+    
+
+    // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        
 
     }
 
-
-    //void OnTriggerEnter(Collider2D other)
     void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -34,10 +36,9 @@ public class EnemyDeath : MonoBehaviour
 
             other.gameObject.SetActive(false);
         }
-  
-        
-    }
 
+
+    }
 
     void OnTriggerExit2D(Collider2D other)
     {
@@ -51,12 +52,11 @@ public class EnemyDeath : MonoBehaviour
     {
 
         // If the objects has this tag it will be looking for this function
-        if (gameObject.tag == "sandcube")
+        if (gameObject.tag == "SandStorm")
         {
             touch = true;
 
         }
     }
-
 
 }
