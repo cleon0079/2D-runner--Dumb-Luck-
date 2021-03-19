@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         //Ground Check
         isOnGround = OnGround();
 
+        // Animations set to default
         if(rigidBody.velocity.x == 0 && rigidBody.velocity.y == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
             animator.SetBool("Idle", true);
@@ -60,10 +61,13 @@ public class PlayerController : MonoBehaviour
         }
 
         #region Jumping Button Reset
+        // check the jump button is release
         if (!isJumpingButtonRelease && Input.GetAxis("Jump") == 0)
         {
             isJumpingButtonRelease = true;
         }
+
+        // check if is on ground then set jumping back to default
         if(isOnGround)
         {
             isJumping = false;
@@ -103,6 +107,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                // This function allows the player to slide after running 
                 rigidBody.velocity = new Vector2(Mathf.SmoothDamp(rigidBody.velocity.x, 0, ref velocityX, decelerateTime), rigidBody.velocity.y);
             }
         }
@@ -111,6 +116,7 @@ public class PlayerController : MonoBehaviour
         #region Jumping and Falling
         if (canJump)
         {
+            // Jumping function
             if (Input.GetAxis("Jump") == 1 && !isJumping && !canDoubleJump && !isDoubleJumping)
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpingSpeed);
@@ -123,6 +129,7 @@ public class PlayerController : MonoBehaviour
             }
             if(isJumping && canDoubleJump && !isDoubleJumping && isJumpingButtonRelease)
             {
+                // DoubleJumping function
                 if (Input.GetAxis("Jump") == 1)
                 {
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, doubleJumpSpeed);
@@ -158,6 +165,7 @@ public class PlayerController : MonoBehaviour
         #region GroundCheck
     bool OnGround()
     {
+        // Ground Check
         Collider2D collidedWithGround = Physics2D.OverlapBox((Vector2)transform.position + pointOffSet, size, 0, groundLayerMask);
         if (collidedWithGround != null)
         {
@@ -171,6 +179,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        // Draw out the box of the GroundCheck function
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube((Vector2)transform.position + pointOffSet, size);
     }

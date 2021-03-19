@@ -29,6 +29,7 @@ public class Point : MonoBehaviour
         gameTime += Time.deltaTime;
         timer += Time.deltaTime;
 
+        // When the player is dead, stop earning point
         if (sandStormDeath.touch == false)
         {
             if (timer >= 1.0f)
@@ -44,6 +45,8 @@ public class Point : MonoBehaviour
                 timer -= 1.0f;
             }
         }
+
+        // Adding earnpoint and player speed and sandstorm speed every level
         if(gameTime >= 10f && earnPoint < 2)
         {
             earnPoint = 2;

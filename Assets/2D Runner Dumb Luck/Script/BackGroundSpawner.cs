@@ -11,6 +11,7 @@ public class BackGroundSpawner : MonoBehaviour
 
     void Update()
     {
+        // Spawn a new background when the player moving to the right
         if (player.transform.position.x >= currentBackground.transform.position.x - 7)
         {
             SpriteRenderer rend = currentBackground.GetComponentInChildren<SpriteRenderer>();
