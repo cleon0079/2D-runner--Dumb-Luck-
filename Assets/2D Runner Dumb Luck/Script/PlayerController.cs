@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float fallMultiplier = 3f;
     [SerializeField] float lowJumpMultiplier = 3f;
     [SerializeField]bool canJump = true;
+    bool isJumpingButtonRelease = true;
     bool isJumping;
 
     [Header("DoubleJump")]
@@ -24,27 +25,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]bool canDoubleJump;
     bool isDoubleJumping;
 
-    [Header("WallJump")]
-    [SerializeField] float wallJumpSpeedY = 15f;
-    [SerializeField] float wallJumpSpeedX = 20f;
-    [SerializeField] bool canWallJump = false;
-    bool isWallJumped;
-    bool isJumpingButtonRelease = true;
-
     [Header("GroundCheck")]
     [SerializeField] Vector2 pointOffSet = new Vector2(0, -0.96f);
     [SerializeField] Vector2 size = new Vector2(0.33f, 0.27f);
     [SerializeField] LayerMask groundLayerMask;
     bool gravityModifier = true;
     bool isOnGround;
-
-    [Header("WallCheck")]
-    [SerializeField] Vector2 leftPointOffSet = new Vector2(-0.31f, 0);
-    [SerializeField] Vector2 rightPointOffSet = new Vector2(0.33f, 0);
-    [SerializeField] Vector2 onWallSize = new Vector2(0.18f, 0.37f);
-    bool isOnWall = true;
-    bool isOnLeftWall = true;
-    bool isOnRightWall = true;
 
     Rigidbody2D rigidBody;
     public SpriteRenderer spriteRenderer;
@@ -59,13 +45,10 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         //Ground Check
         isOnGround = OnGround();
-        isOnLeftWall = OnLeftWall();
-        isOnRightWall = OnRightWall();
-        isOnWall = isOnLeftWall ^ isOnRightWall;
 
         if(rigidBody.velocity.x == 0 && rigidBody.velocity.y == 0 && Input.GetAxisRaw("Horizontal") == 0)
         {
@@ -75,8 +58,23 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Run", false);
             animator.SetBool("DoubleJump", false);
         }
-        
 
+        #region Jumping Button Reset
+        if (!isJumpingButtonRelease && Input.GetAxis("Jump") == 0)
+        {
+            isJumpingButtonRelease = true;
+        }
+        if(isOnGround)
+        {
+            isJumping = false;
+            canDoubleJump = false;
+            isDoubleJumping = false;
+        }
+        #endregion
+    }
+
+    void FixedUpdate()
+    {
         #region Movement
         if (canMove)
         {
@@ -156,41 +154,6 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
-        #region Jumping Button Reset
-        if (!isJumpingButtonRelease && Input.GetAxis("Jump") == 0)
-        {
-            isJumpingButtonRelease = true;
-        }
-        #endregion
-
-        #region WallJump
-        if (canWallJump)
-        {
-            if (Input.GetAxis("Jump") == 1 && isOnWall && !isOnGround && !isWallJumped && isJumpingButtonRelease)
-            {
-                if (isOnLeftWall)
-                {
-                    rigidBody.velocity = new Vector2(wallJumpSpeedX, wallJumpSpeedY);
-                }
-                else
-                {
-                    rigidBody.velocity = new Vector2(wallJumpSpeedX * -1, wallJumpSpeedY);
-                }
-                isWallJumped = true;
-                isJumpingButtonRelease = false;
-                canDoubleJump = true;
-                isDoubleJumping = false;
-            }
-        }
-
-        if(isOnGround)
-        {
-            isJumping = false;
-            canDoubleJump = false;
-            isDoubleJumping = false;
-            isWallJumped = false;
-        }
-        #endregion
     }
         #region GroundCheck
     bool OnGround()
@@ -206,39 +169,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool OnLeftWall()
-    {
-        Collider2D coll = Physics2D.OverlapBox((Vector2)transform.position + leftPointOffSet, onWallSize, 0, groundLayerMask);
-        if (coll != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool OnRightWall()
-    {
-        Collider2D coll = Physics2D.OverlapBox((Vector2)transform.position + rightPointOffSet, onWallSize, 0, groundLayerMask);
-        if (coll != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube((Vector2)transform.position + pointOffSet, size);
-        Gizmos.DrawWireCube((Vector2)transform.position + leftPointOffSet, onWallSize);
-        Gizmos.DrawWireCube((Vector2)transform.position + rightPointOffSet, onWallSize);
     }
-
     #endregion
 }

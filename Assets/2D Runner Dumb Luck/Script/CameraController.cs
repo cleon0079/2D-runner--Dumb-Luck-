@@ -5,9 +5,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public PlayerController player;
-
-    public bool isFollowing = true;
-
     public float xOffset = 7f;
 
     // Start is called before the first frame update
@@ -19,9 +16,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isFollowing)
-        {
-            transform.position = new Vector3(player.transform.position.x + xOffset, 0, transform.position.z);
-        }
+            transform.position = new Vector3(player.transform.position.x + xOffset, 0, transform.position.z); 
     }
 }
