@@ -7,6 +7,7 @@ public class SandStormDeath : MonoBehaviour
 
     public GameObject player;
     public bool touch = false;
+  
     
   
     
@@ -33,6 +34,7 @@ public class SandStormDeath : MonoBehaviour
             Debug.Log("Enter Trigger");
 
             touch = true;
+           
 
             other.gameObject.SetActive(false);
         }
@@ -40,13 +42,7 @@ public class SandStormDeath : MonoBehaviour
 
     }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
 
-        touch = false;
-        //Debug.Log("Collission does not exist");
-
-    }
 
     void OnTriggerStay2D(Collider2D other)
     {
