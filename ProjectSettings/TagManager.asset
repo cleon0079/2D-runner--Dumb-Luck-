@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - SandStorm
+  - BackGround
   layers:
   - Default
   - TransparentFX
