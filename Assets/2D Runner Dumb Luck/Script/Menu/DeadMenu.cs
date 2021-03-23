@@ -20,6 +20,7 @@ public class DeadMenu : MonoBehaviour
 
     private void Start()
     {
+        // Get the player and sandstorm original position 
         playerSpawnPosition = new Vector2(player.transform.position.x, player.transform.position.y);
         sandStormSpawnPosition = new Vector2(sandStorm.transform.position.x, sandStorm.transform.position.y);
         playerController = player.GetComponent<PlayerController>();
@@ -30,6 +31,7 @@ public class DeadMenu : MonoBehaviour
 
     private void Update()
     {
+        // Get the gameobject that we spawn while playing the game
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         backGround = GameObject.FindGameObjectsWithTag("BackGround");
 
@@ -39,11 +41,13 @@ public class DeadMenu : MonoBehaviour
 
     public void Back()
     {
+        // Back to MainMenu
         SceneManager.LoadScene("MainMenu");
     }
 
     public void Resume()
     {
+        // Reset all the change we make while playing back to defalut
         point1.gameTime = 0f;
         point1.timer = 0f;
         point1.earnPoint = 1;

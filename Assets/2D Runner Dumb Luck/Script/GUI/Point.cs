@@ -12,7 +12,6 @@ public class Point : MonoBehaviour
     public float gameTime;
     PlayerController playerController;
     SandStorm sand;
-    SandStormDeath sandStormDeath;
 
     // Start is called before the first frame update
     void Start()
@@ -20,17 +19,18 @@ public class Point : MonoBehaviour
         text = gameObject.GetComponent<Text>();
         playerController = player.GetComponent<PlayerController>();
         sand = sandStorm.GetComponent<SandStorm>();
-        sandStormDeath = sandStorm.GetComponent<SandStormDeath>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // A timer for earnpoint per second
         timer += Time.deltaTime;
 
         // When the player is dead, stop earning point
         if (playerController.playerIsDead == false)
         {
+            // Record the gaming time
             gameTime += Time.deltaTime;
             if (timer >= 1.0f)
             {
