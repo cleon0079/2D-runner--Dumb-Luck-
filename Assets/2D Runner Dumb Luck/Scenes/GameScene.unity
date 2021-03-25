@@ -757,7 +757,6 @@ GameObject:
   - component: {fileID: 485068811}
   - component: {fileID: 485068810}
   - component: {fileID: 485068815}
-  - component: {fileID: 485068814}
   m_Layer: 0
   m_Name: Sand storm
   m_TagString: SandStorm
@@ -862,21 +861,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &485068814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485068809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ff9c6639c840840904de60a74a5231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1997340837}
-  gamePlayUI: {fileID: 2125216339}
-  DeadMenu: {fileID: 2121821119}
 --- !u!61 &485068815
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1390,6 +1374,7 @@ GameObject:
   - component: {fileID: 1997340838}
   - component: {fileID: 1997340843}
   - component: {fileID: 1997340842}
+  - component: {fileID: 1997340844}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1557,6 +1542,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6187613, y: 1.8057841}
   m_EdgeRadius: 0
+--- !u!114 &1997340844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997340837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ff9c6639c840840904de60a74a5231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePlayUI: {fileID: 2125216339}
+  DeadMenu: {fileID: 2121821119}
 --- !u!1 &2121821119
 GameObject:
   m_ObjectHideFlags: 0

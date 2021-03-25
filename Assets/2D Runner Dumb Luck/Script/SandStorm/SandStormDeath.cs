@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class SandStormDeath : MonoBehaviour
 {
-    public GameObject player;
     PlayerController playerCon;
     public GameObject gamePlayUI;
     public GameObject DeadMenu;
 
     private void Start()
     {
-        playerCon = player.GetComponent<PlayerController>();
+        playerCon = GetComponent<PlayerController>();
     }
 
 
@@ -19,7 +18,7 @@ public class SandStormDeath : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.tag == "Player")
+        if (other.tag == "Enemy" || other.tag == "SandStorm")
         {
             playerCon.playerIsDead = true;
             gamePlayUI.SetActive(false);
