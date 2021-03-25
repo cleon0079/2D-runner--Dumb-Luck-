@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/2D Runner Dumb Luck/Scenes/GameScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/2D Runner Dumb Luck/Scenes/MainMenu.unity
     guid: be69a0a516f10404d9318608db033c01
+  - enabled: 1
+    path: Assets/2D Runner Dumb Luck/Scenes/GameScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
